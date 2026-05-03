@@ -4,16 +4,16 @@ const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 
 // ── Default model from environment ──────────────────────────────────────────
 // Change OPENROUTER_MODEL in .env to swap models without touching code.
-// Current best free model: deepseek/deepseek-r1:free
+// Current best free model: meta-llama/llama-3.3-70b-instruct:free
 export const DEFAULT_MODEL =
-  process.env.OPENROUTER_MODEL ?? "deepseek/deepseek-r1:free";
+  process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free";
 
 // ── Named model constants (for reference / explicit overrides) ────────────────
 export const MODELS = {
   // Free tier — verified available on OpenRouter
-  GEMINI_FLASH: "google/gemini-2.0-flash-exp:free",   // fast + JSON, recommended
+  LLAMA_70B: "meta-llama/llama-3.3-70b-instruct:free", // Meta Llama 3.3 70B (Recommended, reliable JSON)
   DEEPSEEK_V3: "deepseek/deepseek-chat:free",          // DeepSeek V3, strong reasoning
-  LLAMA_70B: "meta-llama/llama-3.3-70b-instruct:free", // Meta Llama 3.3 70B
+  GEMMA_27B: "google/gemma-3-27b-it:free",             // Google Gemma 3 27B
 
   // Paid tier (set OPENROUTER_MODEL to these if you upgrade)
   GPT4O: "openai/gpt-4o",
