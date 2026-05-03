@@ -13,7 +13,7 @@ export const registerSchema = z.object({
     .min(8, "Password must be at least 8 characters")
     .max(72, "Password must be under 72 characters"),
   role: z.enum(["candidate", "employer", "institution"], {
-    required_error: "Please select a role",
+    message: "Please select a role",
   }),
 });
 
