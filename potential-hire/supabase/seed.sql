@@ -89,10 +89,10 @@ BEGIN
     (candidate_1_profile_id, skill_react, 'advanced', true, 'assessment'),
     (candidate_1_profile_id, skill_node, 'intermediate', true, 'credential'),
     (candidate_1_profile_id, skill_sql, 'intermediate', false, 'self_reported'),
-    (candidate_1_profile_id, skill_communication, 'advanced', true, 'peer_review'),
+    (candidate_1_profile_id, skill_communication, 'advanced', true, 'ai_extracted'),
     
     (candidate_2_profile_id, skill_figma, 'expert', true, 'assessment'),
-    (candidate_2_profile_id, skill_communication, 'expert', true, 'peer_review');
+    (candidate_2_profile_id, skill_communication, 'expert', true, 'ai_extracted');
 
     -- ==========================================
     -- 6. ASSESSMENTS
