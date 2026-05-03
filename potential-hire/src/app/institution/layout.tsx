@@ -7,9 +7,10 @@ import { createBrowserSupabase } from "@/lib/db/supabase.browser";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { toast } from "sonner";
 import {
-  LayoutDashboard, Users, BarChart3, Settings, LogOut, Menu, Sparkles, X, ChevronRight, GraduationCap,
+  LayoutDashboard, Users, BarChart3, Settings, LogOut, Menu, Sparkles, X, ChevronRight, GraduationCap, Rocket,
 } from "lucide-react";
 
 const navItems = [
@@ -34,11 +35,11 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
     <div className="flex flex-col h-full">
       <div className="p-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4 text-white" />
+          <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <Rocket className="w-5 h-5 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight">
-            Potential<span className="gradient-text">Hire</span>
+          <span className="text-sm font-bold tracking-tight">
+            Hire<span className="text-primary">Potential</span>
           </span>
         </Link>
         {onClose && (
@@ -66,11 +67,10 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                isActive
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive
                   ? "bg-primary/10 text-primary shadow-sm"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
-              }`}
+                }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? "text-primary" : ""}`} />
               <span className="flex-1">{item.label}</span>
@@ -82,6 +82,9 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
 
       <Separator className="opacity-50" />
       <div className="p-4">
+        <div className="mb-2">
+          <ThemeToggle />
+        </div>
         <Button
           variant="ghost"
           className="w-full justify-start text-muted-foreground hover:text-destructive"

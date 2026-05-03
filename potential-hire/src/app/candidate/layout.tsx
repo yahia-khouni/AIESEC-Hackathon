@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { toast } from "sonner";
 import {
   LayoutDashboard,
@@ -20,7 +21,10 @@ import {
   LogOut,
   Menu,
   Sparkles,
+  Rocket,
   X,
+  Building2,
+  ChevronsUpDown,
 } from "lucide-react";
 
 const navItems = [
@@ -30,6 +34,7 @@ const navItems = [
   { href: "/candidate/credentials", label: "Credentials", icon: Award },
   { href: "/candidate/assessments", label: "Assessments", icon: ShieldCheck },
   { href: "/candidate/marketplace", label: "Marketplace", icon: Briefcase },
+  { href: "/candidate/opportunities", label: "Apply jobs", icon: Building2 },
   { href: "/candidate/settings", label: "Settings", icon: Settings },
 ];
 
@@ -50,11 +55,11 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
       {/* Logo */}
       <div className="p-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4 h-4 text-white" />
+          <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-105 transition-transform shadow-md">
+            <Rocket className="w-5 h-5 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight">
-            Potential<span className="gradient-text">Hire</span>
+          <span className="text-sm font-bold tracking-tight">
+            Hire<span className="text-primary">Potential</span>
           </span>
         </Link>
         {onClose && (
@@ -76,11 +81,10 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                isActive
-                  ? "bg-primary/10 text-primary shadow-sm"
-                  : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
-              }`}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${isActive
+                ? "bg-primary/10 text-primary shadow-sm"
+                : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
+                }`}
             >
               <Icon className={`w-4 h-4 ${isActive ? "text-primary" : ""}`} />
               {item.label}
@@ -105,6 +109,9 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
               Free Plan
             </p>
           </div>
+        </div>
+        <div className="mb-2">
+          <ThemeToggle />
         </div>
         <Button
           variant="ghost"

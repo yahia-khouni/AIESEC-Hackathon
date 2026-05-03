@@ -57,12 +57,12 @@ export async function GET(request: NextRequest) {
         if (employerEmail) {
           await notificationService.sendEmail({
             to: employerEmail,
-            subject: `PotentialHire: A candidate is ready to hire!`,
+            subject: `HirePotential: A candidate is ready to hire!`,
             html: `
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
                 <h2>A candidate is ready!</h2>
                 <p>Hello <strong>${employerName}</strong>,</p>
-                <p>One of your bookmarked candidates on PotentialHire has reached your readiness threshold of <strong>${threshold}</strong>.</p>
+                <p>One of your bookmarked candidates on HirePotential has reached your readiness threshold of <strong>${threshold}</strong>.</p>
                 <p>Their current potential score is <strong>${candidateScore}</strong>.</p>
                 <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/employer/pipeline" style="background: #6366f1; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">View Pipeline →</a></p>
               </div>

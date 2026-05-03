@@ -17,14 +17,10 @@ export default function AuthLayout({
       {/* Logo */}
       <Link
         href="/"
-        className="flex items-center gap-2 mb-8 relative z-10 group"
+        className="flex items-center justify-center mb-8 relative z-10 group"
       >
-        <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-          <Sparkles className="w-5 h-5 text-white" />
-        </div>
-        <span className="text-xl font-bold tracking-tight">
-          Potential<span className="gradient-text">Hire</span>
-        </span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="HirePotential Logo" className="w-auto h-24 rounded-2xl object-contain drop-shadow-lg group-hover:scale-105 transition-transform invert dark:invert-0" />
       </Link>
 
       {/* Auth card */}

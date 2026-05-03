@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Loader2, ArrowRight, ArrowLeft, Plus, X, Sparkles, CheckCircle2 } from "lucide-react";
+import { Loader2, ArrowRight, ArrowLeft, Plus, X, Sparkles, CheckCircle2, Rocket } from "lucide-react";
 
 const STEPS = ["About You", "Career Goals", "Your Skills"];
 
@@ -186,7 +186,7 @@ export default function CandidateOnboarding() {
         .update({ onboarding_complete: true })
         .eq("id", user.id);
 
-      toast.success("Profile created! Welcome to PotentialHire 🎉");
+      toast.success("Profile created! Welcome to HirePotential 🎉");
       router.push("/candidate/dashboard");
       router.refresh();
     } catch (error) {
@@ -235,7 +235,7 @@ export default function CandidateOnboarding() {
             <>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-primary" />
+                  <Rocket className="w-5 h-5 text-primary" />
                   Tell us about yourself
                 </CardTitle>
                 <CardDescription>

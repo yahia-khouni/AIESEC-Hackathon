@@ -23,7 +23,7 @@ import {
   Users,
   Briefcase,
   MapPin,
-  Sparkles,
+  Rocket,
   CheckCircle2,
   ArrowRight,
   ArrowLeft,
@@ -153,7 +153,7 @@ export default function EmployerOnboardingPage() {
         throw new Error(err.error || "Failed to create employer profile");
       }
 
-      toast.success("Welcome to PotentialHire! 🎉");
+      toast.success("Welcome to HirePotential! 🎉");
       router.push("/employer/dashboard");
       router.refresh();
     } catch (err) {
@@ -170,10 +170,10 @@ export default function EmployerOnboardingPage() {
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
+              <Rocket className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold">
-              Potential<span className="gradient-text">Hire</span>
+              Hire<span className="text-primary">Potential</span>
             </span>
           </div>
           <h1 className="text-3xl font-bold mb-2">Set up your employer profile</h1>

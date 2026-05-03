@@ -104,4 +104,24 @@ export const jobService = {
     if (error) return 0;
     return count ?? 0;
   },
+
+  async listActiveJobs(): Promise<JobPost[]> {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("job_posts")
+      .select(`
+        *,
+        employers:employer_id ( company_name )
+      `)
+      .eq("status", "active")
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    
+    // Map employer company_name to a company property if needed,
+    // or we can just return it. The frontend might need company name.
+    return (data ?? []).map((job: any) => ({
+      ...job,
+      company: job.employers?.company_name || "Confidential",
+    })) as JobPost[];
+  },
 };

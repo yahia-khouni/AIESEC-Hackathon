@@ -50,6 +50,45 @@
 
 /* Dark-first premium design with indigo/violet accents */
 :root {
+  --background: oklch(0.98 0.01 270);
+  --foreground: oklch(0.15 0.02 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.02 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 270);
+  --primary: oklch(0.60 0.22 270);
+  --primary-foreground: oklch(0.98 0.005 270);
+  --secondary: oklch(0.96 0.01 270);
+  --secondary-foreground: oklch(0.20 0.02 270);
+  --muted: oklch(0.96 0.01 270);
+  --muted-foreground: oklch(0.45 0.02 270);
+  --accent: oklch(0.94 0.02 270);
+  --accent-foreground: oklch(0.20 0.02 270);
+  --destructive: oklch(0.55 0.22 25);
+  --border: oklch(0.90 0.02 270);
+  --input: oklch(0.90 0.02 270);
+  --ring: oklch(0.60 0.22 270);
+  --chart-1: oklch(0.60 0.22 270);
+  --chart-2: oklch(0.65 0.19 300);
+  --chart-3: oklch(0.68 0.16 190);
+  --chart-4: oklch(0.70 0.14 140);
+  --chart-5: oklch(0.65 0.18 330);
+  --radius: 0.75rem;
+  --sidebar: oklch(0.98 0.01 270);
+  --sidebar-foreground: oklch(0.15 0.02 270);
+  --sidebar-primary: oklch(0.60 0.22 270);
+  --sidebar-primary-foreground: oklch(0.98 0.005 270);
+  --sidebar-accent: oklch(0.94 0.02 270);
+  --sidebar-accent-foreground: oklch(0.15 0.02 270);
+  --sidebar-border: oklch(0.90 0.02 270);
+  --sidebar-ring: oklch(0.60 0.22 270);
+  --card-gradient: none;
+  --hero-gradient: linear-gradient(160deg, oklch(0.98 0.01 270) 0%, oklch(0.96 0.02 270) 50%, oklch(0.94 0.02 300) 100%);
+  --text-gradient: linear-gradient(135deg, oklch(0.45 0.25 270), oklch(0.40 0.22 300));
+  --text-glow: none;
+}
+
+.dark {
   --background: oklch(0.13 0.01 270);
   --foreground: oklch(0.96 0.005 270);
   --card: oklch(0.18 0.015 270);
@@ -73,7 +112,6 @@
   --chart-3: oklch(0.72 0.16 190);
   --chart-4: oklch(0.75 0.14 140);
   --chart-5: oklch(0.70 0.18 330);
-  --radius: 0.75rem;
   --sidebar: oklch(0.16 0.015 270);
   --sidebar-foreground: oklch(0.90 0.005 270);
   --sidebar-primary: oklch(0.65 0.22 270);
@@ -82,15 +120,21 @@
   --sidebar-accent-foreground: oklch(0.96 0.005 270);
   --sidebar-border: oklch(0.28 0.02 270);
   --sidebar-ring: oklch(0.65 0.22 270);
+  --card-gradient: linear-gradient(145deg, oklch(0.20 0.02 270), oklch(0.17 0.015 280));
+  --hero-gradient: linear-gradient(160deg, oklch(0.13 0.01 270) 0%, oklch(0.18 0.06 270) 50%, oklch(0.15 0.04 300) 100%);
+  --text-gradient: linear-gradient(135deg, oklch(0.75 0.18 270), oklch(0.70 0.20 300));
+  --text-glow: 0 0 20px oklch(0.65 0.22 270 / 30%);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
   }
+
   html {
     @apply font-sans scroll-smooth;
   }
@@ -101,49 +145,79 @@
   .gradient-primary {
     background: linear-gradient(135deg, oklch(0.55 0.25 270), oklch(0.60 0.22 300));
   }
+
   .gradient-hero {
-    background: linear-gradient(160deg, oklch(0.13 0.01 270) 0%, oklch(0.18 0.06 270) 50%, oklch(0.15 0.04 300) 100%);
+    background: var(--hero-gradient);
   }
+
   .gradient-card {
-    background: linear-gradient(145deg, oklch(0.20 0.02 270), oklch(0.17 0.015 280));
+    background: var(--card-gradient);
+    background-color: var(--card);
   }
+
   .gradient-text {
-    background: linear-gradient(135deg, oklch(0.75 0.18 270), oklch(0.70 0.20 300));
+    background: var(--text-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   .glass {
-    background: oklch(0.18 0.015 270 / 60%);
+    background: color-mix(in srgb, var(--background) 80%, transparent);
     backdrop-filter: blur(16px);
-    border: 1px solid oklch(1 0 0 / 8%);
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
   }
+
   .glow {
     box-shadow: 0 0 20px oklch(0.65 0.22 270 / 15%), 0 0 40px oklch(0.60 0.22 300 / 8%);
   }
+
   .glow-text {
-    text-shadow: 0 0 20px oklch(0.65 0.22 270 / 30%);
+    text-shadow: var(--text-glow);
   }
 }
 
 /* Smooth animations */
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px oklch(0.65 0.22 270 / 10%); }
-  50% { box-shadow: 0 0 30px oklch(0.65 0.22 270 / 25%); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px oklch(0.65 0.22 270 / 10%);
+  }
+
+  50% {
+    box-shadow: 0 0 30px oklch(0.65 0.22 270 / 25%);
+  }
 }
 
 @keyframes score-ring {
-  from { stroke-dashoffset: 283; }
+  from {
+    stroke-dashoffset: 283;
+  }
 }
 
 .animate-fade-in {
@@ -163,14 +237,38 @@
 }
 
 /* Stagger children animations */
-.stagger-children > * {
+.stagger-children>* {
   animation: fade-in 0.5s ease-out both;
 }
-.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
-.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
-.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
-.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
-.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
-.stagger-children > *:nth-child(7) { animation-delay: 480ms; }
-.stagger-children > *:nth-child(8) { animation-delay: 560ms; }
+
+.stagger-children>*:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.stagger-children>*:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.stagger-children>*:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.stagger-children>*:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.stagger-children>*:nth-child(5) {
+  animation-delay: 320ms;
+}
+
+.stagger-children>*:nth-child(6) {
+  animation-delay: 400ms;
+}
+
+.stagger-children>*:nth-child(7) {
+  animation-delay: 480ms;
+}
+
+.stagger-children>*:nth-child(8) {
+  animation-delay: 560ms;
+}

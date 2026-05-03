@@ -54,11 +54,10 @@ export default function LandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/30">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-lg font-bold">
-              Potential<span className="gradient-text">Hire</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="HirePotential Logo" className="w-auto h-8 object-contain drop-shadow-sm group-hover:scale-105 transition-transform invert dark:invert-0" />
+            <span className="text-base font-bold tracking-tight">
+              Hire<span className="text-primary">Potential</span>
             </span>
           </Link>
           <div className="flex items-center gap-3">
@@ -235,13 +234,12 @@ export default function LandingPage() {
       <footer className="py-8 px-6 border-t border-border/20">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md gradient-primary flex items-center justify-center">
-              <Sparkles className="w-3 h-3 text-white" />
-            </div>
-            <span className="text-sm font-semibold">PotentialHire</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="HirePotential Logo" className="w-auto h-6 object-contain drop-shadow-sm invert dark:invert-0" />
+            <span className="text-sm font-semibold tracking-tight">HirePotential</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            © 2026 PotentialHire. Built for AIESEC Hackathon.
+            © 2026 HirePotential. Built for AIESEC Hackathon.
           </p>
         </div>
       </footer>

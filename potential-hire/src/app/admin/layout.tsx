@@ -7,9 +7,10 @@ import { createBrowserSupabase } from "@/lib/db/supabase.browser";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { toast } from "sonner";
 import {
-  LayoutDashboard, Users, Shield, BarChart3, LogOut, Menu, Sparkles, X, ChevronRight,
+  LayoutDashboard, Users, Shield, BarChart3, LogOut, Menu, Sparkles, X, ChevronRight, Rocket,
 } from "lucide-react";
 
 const navItems = [
@@ -34,11 +35,11 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
     <div className="flex flex-col h-full">
       <div className="p-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-white" />
+          <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center shadow-md">
+            <Rocket className="w-5 h-5 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight">
-            Potential<span className="gradient-text">Hire</span>
+          <span className="text-sm font-bold tracking-tight">
+            Hire<span className="text-primary">Potential</span>
           </span>
         </Link>
         {onClose && (
@@ -80,6 +81,9 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
 
       <Separator className="opacity-50" />
       <div className="p-4">
+        <div className="mb-2">
+          <ThemeToggle />
+        </div>
         <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-destructive" onClick={handleSignOut}>
           <LogOut className="w-4 h-4 mr-2" />Sign Out
         </Button>
