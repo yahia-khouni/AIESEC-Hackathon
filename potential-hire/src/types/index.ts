@@ -259,6 +259,27 @@ export interface Employer {
   plan: EmployerPlan;
   team_seats: number;
   candidate_views_remaining: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Institution {
+  id: string;
+  user_id: string;
+  name: string;
+  country: string;
+  type: InstitutionType;
+  student_count: number;
+  verified: boolean;
+  created_at: string;
+}
+
+export interface CohortMember {
+  id: string;
+  cohort_id: string;
+  candidate_id: string;
+  role: "student" | "mentor";
+  joined_at: string;
 }
 
 export interface JobPost {

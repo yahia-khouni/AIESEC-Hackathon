@@ -135,11 +135,13 @@ export default function CandidateLayout({
 
       {/* Mobile sidebar */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetTrigger asChild>
-          <button className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar border border-border/50 shadow-lg">
-            <Menu className="w-5 h-5" />
-          </button>
-        </SheetTrigger>
+        <SheetTrigger
+          render={
+            <button className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar border border-border/50 shadow-lg">
+              <Menu className="w-5 h-5" />
+            </button>
+          }
+        />
         <SheetContent side="left" className="w-64 p-0 bg-sidebar">
           <SidebarContent onClose={() => setMobileOpen(false)} />
         </SheetContent>
