@@ -26,6 +26,9 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const supabase = createBrowserSupabase();
   const redirectTo = searchParams.get("redirect") || "";
+  const authError = searchParams.get("error");
+  const authErrorCode = searchParams.get("error_code");
+  const authErrorDesc = searchParams.get("error_description");
 
   const {
     register,
@@ -96,6 +99,31 @@ function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Auth Error Banner */}
+        {authError && (
+          <div className="p-4 rounded-lg border border-destructive/50 bg-destructive/10 space-y-1">
+            <p className="text-sm font-semibold text-destructive">
+              ⚠ Authentication Error
+            </p>
+            <p className="text-xs text-destructive/80">
+              <strong>Error:</strong> {authError}
+            </p>
+            {authErrorCode && (
+              <p className="text-xs text-destructive/80">
+                <strong>Code:</strong> {authErrorCode}
+              </p>
+            )}
+            {authErrorDesc && (
+              <p className="text-xs text-destructive/80">
+                <strong>Details:</strong> {decodeURIComponent(authErrorDesc)}
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground mt-2">
+              💡 Check the terminal logs for more details.
+            </p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>

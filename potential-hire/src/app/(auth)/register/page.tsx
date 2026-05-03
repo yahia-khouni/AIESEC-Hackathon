@@ -69,7 +69,11 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterInput) {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signUp({
+      console.log("━━━ REGISTER ATTEMPT ━━━");
+      console.log("  email:", data.email);
+      console.log("  role:", data.role);
+
+      const { data: authData, error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -81,14 +85,45 @@ export default function RegisterPage() {
       });
 
       if (error) {
+        console.error("━━━ REGISTER ERROR ━━━", error);
         toast.error(error.message);
         return;
       }
 
+      const userId = authData?.user?.id;
+      if (!userId) {
+        toast.error("Account created but no user ID returned. Check your email to confirm.");
+        return;
+      }
+
+      console.log("  ✅ Auth user created:", userId);
+
+      // Manually create public.users profile (bypasses unreliable trigger)
+      console.log("  Creating profile via API...");
+      const profileRes = await fetch("/api/auth/create-profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          email: data.email,
+          full_name: data.full_name,
+          role: data.role,
+        }),
+      });
+
+      const profileJson = await profileRes.json();
+      if (!profileRes.ok) {
+        console.error("  ❌ Profile creation failed:", profileJson);
+        toast.error("Account created but profile setup failed: " + profileJson.error);
+        return;
+      }
+
+      console.log("  ✅ Profile created:", profileJson);
       toast.success("Account created! Redirecting...");
       router.push(`/${data.role}/onboarding`);
       router.refresh();
-    } catch {
+    } catch (err) {
+      console.error("━━━ REGISTER UNHANDLED ERROR ━━━", err);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

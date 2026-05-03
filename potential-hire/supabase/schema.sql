@@ -484,13 +484,30 @@ CREATE TRIGGER internships_updated_at BEFORE UPDATE ON public.internships
 -- Auto-create user profile after auth signup
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  user_role_val user_role;
 BEGIN
+  -- Safely extract role, defaulting to 'candidate' if missing or invalid
+  BEGIN
+    user_role_val := (NEW.raw_user_meta_data->>'role')::user_role;
+  EXCEPTION WHEN OTHERS THEN
+    user_role_val := 'candidate';
+  END;
+
+  IF user_role_val IS NULL THEN
+    user_role_val := 'candidate';
+  END IF;
+
   INSERT INTO public.users (id, email, full_name, role)
   VALUES (
     NEW.id,
     NEW.email,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', 'User'),
-    COALESCE((NEW.raw_user_meta_data->>'role')::user_role, 'candidate')
+    COALESCE(
+      NEW.raw_user_meta_data->>'full_name',
+      NEW.raw_user_meta_data->>'name',
+      split_part(NEW.email, '@', 1)
+    ),
+    user_role_val
   );
   RETURN NEW;
 END;
