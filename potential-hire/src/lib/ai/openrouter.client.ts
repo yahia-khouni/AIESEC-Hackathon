@@ -10,12 +10,12 @@ export const DEFAULT_MODEL =
 
 // ── Named model constants (for reference / explicit overrides) ────────────────
 export const MODELS = {
-  // Free tier — most powerful options
-  DEEPSEEK_R1: "deepseek/deepseek-r1:free",
-  GEMINI_FLASH: "google/gemini-2.0-flash-exp:free",
-  LLAMA4_MAVERICK: "meta-llama/llama-4-maverick:free",
+  // Free tier — verified available on OpenRouter
+  GEMINI_FLASH: "google/gemini-2.0-flash-exp:free",   // fast + JSON, recommended
+  DEEPSEEK_V3: "deepseek/deepseek-chat:free",          // DeepSeek V3, strong reasoning
+  LLAMA_70B: "meta-llama/llama-3.3-70b-instruct:free", // Meta Llama 3.3 70B
 
-  // Paid tier (uncomment & set OPENROUTER_MODEL if you upgrade)
+  // Paid tier (set OPENROUTER_MODEL to these if you upgrade)
   GPT4O: "openai/gpt-4o",
   GPT4O_MINI: "openai/gpt-4o-mini",
   CLAUDE_SONNET: "anthropic/claude-sonnet-4-20250514",
