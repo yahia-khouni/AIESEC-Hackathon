@@ -103,13 +103,11 @@ export default function InstitutionLayout({ children }: { children: React.ReactN
         <SidebarContent />
       </aside>
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetTrigger
-          render={
-            <button className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar border border-border/50 shadow-lg">
-              <Menu className="w-5 h-5" />
-            </button>
-          }
-        />
+        <SheetTrigger>
+          <div role="button" aria-label="Open menu" className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar border border-border/50 shadow-lg cursor-pointer">
+            <Menu className="w-5 h-5" />
+          </div>
+        </SheetTrigger>
         <SheetContent side="left" className="w-64 p-0 bg-sidebar">
           <SidebarContent onClose={() => setMobileOpen(false)} />
         </SheetContent>
