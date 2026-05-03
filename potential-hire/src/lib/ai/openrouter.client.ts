@@ -2,8 +2,27 @@ import { z, type ZodSchema } from "zod";
 
 const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 
+// ── Default model from environment ──────────────────────────────────────────
+// Change OPENROUTER_MODEL in .env to swap models without touching code.
+// Current best free model: deepseek/deepseek-r1:free
+export const DEFAULT_MODEL =
+  process.env.OPENROUTER_MODEL ?? "deepseek/deepseek-r1:free";
+
+// ── Named model constants (for reference / explicit overrides) ────────────────
+export const MODELS = {
+  // Free tier — most powerful options
+  DEEPSEEK_R1: "deepseek/deepseek-r1:free",
+  GEMINI_FLASH: "google/gemini-2.0-flash-exp:free",
+  LLAMA4_MAVERICK: "meta-llama/llama-4-maverick:free",
+
+  // Paid tier (uncomment & set OPENROUTER_MODEL if you upgrade)
+  GPT4O: "openai/gpt-4o",
+  GPT4O_MINI: "openai/gpt-4o-mini",
+  CLAUDE_SONNET: "anthropic/claude-sonnet-4-20250514",
+} as const;
+
 interface AICompleteParams<T> {
-  model: string;
+  model?: string; // defaults to DEFAULT_MODEL (env var)
   systemPrompt: string;
   userPrompt: string;
   responseSchema: ZodSchema<T>;
@@ -13,13 +32,15 @@ interface AICompleteParams<T> {
 
 export async function aiComplete<T>(params: AICompleteParams<T>): Promise<T> {
   const {
-    model,
+    model = DEFAULT_MODEL,
     systemPrompt,
     userPrompt,
     responseSchema,
     temperature = 0.3,
     maxRetries = 3,
   } = params;
+
+  console.log(`[OpenRouter] Using model: ${model}`);
 
   let lastError: Error | null = null;
 
@@ -80,11 +101,3 @@ export async function aiComplete<T>(params: AICompleteParams<T>): Promise<T> {
     `OpenRouter failed after ${maxRetries} attempts: ${lastError?.message}`
   );
 }
-
-// Preset model constants
-export const MODELS = {
-  GPT4O: "openai/gpt-4o",
-  GPT4O_MINI: "openai/gpt-4o-mini",
-  CLAUDE_SONNET: "anthropic/claude-sonnet-4-20250514",
-  LLAMA_70B: "meta-llama/llama-3.1-70b-instruct",
-} as const;

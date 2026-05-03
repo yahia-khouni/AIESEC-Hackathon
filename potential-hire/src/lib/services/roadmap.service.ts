@@ -1,4 +1,4 @@
-import { aiComplete, MODELS } from "@/lib/ai/openrouter.client";
+import { aiComplete, DEFAULT_MODEL } from "@/lib/ai/openrouter.client";
 import { roadmapResponseSchema } from "@/lib/validations/schemas";
 import { createClient } from "@/lib/db/supabase.server";
 import type { Roadmap, CandidateSkill } from "@/types";
@@ -25,7 +25,6 @@ export const roadmapService = {
       : "No skills listed yet";
 
     const roadmapData = await aiComplete({
-      model: MODELS.GPT4O,
       systemPrompt: `You are an expert career development AI. Generate a detailed, phased learning roadmap for someone who wants to become a ${targetRole}.
 
 The roadmap should:
@@ -62,7 +61,7 @@ Generate a comprehensive learning roadmap.`,
         })),
         completion_pct: 0,
         status: "active",
-        generated_by_model: MODELS.GPT4O,
+        generated_by_model: DEFAULT_MODEL,
       })
       .select()
       .single();

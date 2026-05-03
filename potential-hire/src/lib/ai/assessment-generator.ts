@@ -1,4 +1,4 @@
-import { aiComplete, MODELS } from "@/lib/ai/openrouter.client";
+import { aiComplete } from "@/lib/ai/openrouter.client";
 import { quizQuestionSchema } from "@/lib/validations/schemas";
 import type { QuizQuestion } from "@/lib/validations/schemas";
 
@@ -8,7 +8,6 @@ export async function generateQuiz(
   count: number = 10
 ): Promise<QuizQuestion[]> {
   const result = await aiComplete({
-    model: MODELS.GPT4O_MINI,
     systemPrompt: `You are a technical assessment AI. Generate multiple-choice quiz questions to test knowledge of a specific skill.
 
 Rules:

@@ -1,4 +1,4 @@
-import { aiComplete, MODELS } from "@/lib/ai/openrouter.client";
+import { aiComplete } from "@/lib/ai/openrouter.client";
 import { skillExtractionSchema } from "@/lib/validations/schemas";
 
 export async function extractSkills(
@@ -8,7 +8,6 @@ export async function extractSkills(
   { name: string; category: "technical" | "soft" | "domain"; proficiency: "beginner" | "intermediate" | "advanced" | "expert" }[]
 > {
   const result = await aiComplete({
-    model: MODELS.GPT4O_MINI,
     systemPrompt: `You are a skill extraction AI. Analyze the provided resume text and profile skills to extract a normalized list of skills with proficiency levels.
 
 Rules:

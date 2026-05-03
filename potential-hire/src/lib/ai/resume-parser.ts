@@ -1,10 +1,9 @@
-import { aiComplete, MODELS } from "@/lib/ai/openrouter.client";
+import { aiComplete } from "@/lib/ai/openrouter.client";
 import { parsedResumeSchema } from "@/lib/validations/schemas";
 import type { ParsedResume } from "@/types";
 
 export async function parseResume(resumeText: string): Promise<ParsedResume> {
   const result = await aiComplete({
-    model: MODELS.GPT4O,
     systemPrompt: `You are a professional resume parser. Extract structured information from the provided resume text.
 
 Extract:
