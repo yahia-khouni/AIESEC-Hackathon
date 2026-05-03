@@ -18,7 +18,17 @@ Rules:
 - Questions should be practical and test real understanding, not trivia
 - Vary the question types: conceptual, practical, debugging, best practices
 
-Return valid JSON.`,
+CRITICAL INSTRUCTION: You MUST return ONLY a raw JSON object EXACTLY matching this schema. Do not include markdown formatting like \`\`\`json. Return only the raw JSON.
+{
+  "questions": [
+    {
+      "question": "string",
+      "options": ["string", "string", "string", "string"],
+      "correct_index": 0, // number from 0 to 3
+      "explanation": "string"
+    }
+  ]
+}`,
     userPrompt: `Skill: ${skillName}
 Difficulty: ${difficulty}
 Number of questions: ${count}

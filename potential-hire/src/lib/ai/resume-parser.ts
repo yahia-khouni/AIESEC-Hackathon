@@ -14,7 +14,28 @@ Extract:
 - certifications: Array of certification/course names mentioned
 
 If a section is not present in the resume, return an empty array for it.
-Return valid JSON matching the exact schema.`,
+CRITICAL INSTRUCTION: You MUST return ONLY a raw JSON object EXACTLY matching this schema. Do not include markdown formatting like \`\`\`json. Return only the raw JSON.
+{
+  "summary": "string",
+  "experience": [
+    {
+      "title": "string",
+      "company": "string",
+      "duration": "string",
+      "description": "string"
+    }
+  ],
+  "education": [
+    {
+      "degree": "string",
+      "institution": "string",
+      "year": "string",
+      "field": "string"
+    }
+  ],
+  "skills": ["string"],
+  "certifications": ["string"]
+}`,
     userPrompt: resumeText,
     responseSchema: parsedResumeSchema,
     temperature: 0.1,

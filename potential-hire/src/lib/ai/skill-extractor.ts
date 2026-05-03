@@ -18,7 +18,16 @@ Rules:
 - Remove duplicates
 - Maximum 30 skills
 
-Return valid JSON.`,
+CRITICAL INSTRUCTION: You MUST return ONLY a raw JSON object EXACTLY matching this schema. Do not include markdown formatting like \`\`\`json. Return only the raw JSON.
+{
+  "skills": [
+    {
+      "name": "string",
+      "category": "technical", // or "soft", "domain"
+      "proficiency": "beginner" // or "intermediate", "advanced", "expert"
+    }
+  ]
+}`,
     userPrompt: `Resume text:
 ${resumeText}
 
