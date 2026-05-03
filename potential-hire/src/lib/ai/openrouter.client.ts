@@ -4,16 +4,16 @@ const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 
 // ── Default model from environment ──────────────────────────────────────────
 // Change OPENROUTER_MODEL in .env to swap models without touching code.
-// Current best free model: meta-llama/llama-3.3-70b-instruct:free
+// Current best free model: nvidia/nemotron-3-super-120b-a12b:free
 export const DEFAULT_MODEL =
-  process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.3-70b-instruct:free";
+  process.env.OPENROUTER_MODEL ?? "nvidia/nemotron-3-super-120b-a12b:free";
 
 // ── Named model constants (for reference / explicit overrides) ────────────────
 export const MODELS = {
   // Free tier — verified available on OpenRouter
-  LLAMA_70B: "meta-llama/llama-3.3-70b-instruct:free", // Meta Llama 3.3 70B (Recommended, reliable JSON)
-  DEEPSEEK_V3: "deepseek/deepseek-chat:free",          // DeepSeek V3, strong reasoning
-  GEMMA_27B: "google/gemma-3-27b-it:free",             // Google Gemma 3 27B
+  NEMOTRON_120B: "nvidia/nemotron-3-super-120b-a12b:free", // Supports JSON, fast
+  MINIMAX_M25: "minimax/minimax-m2.5:free",                // Alternative JSON support
+  LLAMA_70B: "meta-llama/llama-3.3-70b-instruct:free",     // Often rate-limited (429)
 
   // Paid tier (set OPENROUTER_MODEL to these if you upgrade)
   GPT4O: "openai/gpt-4o",
