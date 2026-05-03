@@ -35,7 +35,37 @@ The roadmap should:
 - Be realistic and achievable within the given timeline
 - Account for the candidate's current skill level
 
-Return valid JSON matching the schema exactly. All resource URLs should be real, working URLs.`,
+CRITICAL INSTRUCTION: You MUST return ONLY a raw JSON object EXACTLY matching this schema. Do not include markdown formatting like \`\`\`json. Return only the raw JSON.
+{
+  "target_role": "string",
+  "estimated_duration_weeks": 24,
+  "phases": [
+    {
+      "title": "string",
+      "duration_weeks": 6,
+      "milestones": [
+        {
+          "title": "string",
+          "description": "string",
+          "skills": ["string"],
+          "resources": [
+            {
+              "type": "course", // or "video", "article", "project", "book"
+              "title": "string",
+              "url": "string",
+              "provider": "string",
+              "free": true
+            }
+          ],
+          "assessment": {
+            "type": "quiz", // or "project_submission"
+            "criteria": "string"
+          }
+        }
+      ]
+    }
+  ]
+}`,
       userPrompt: `Current skills: ${skillsDescription}
 Target role: ${targetRole}
 Timeline: ${timelineWeeks} weeks

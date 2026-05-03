@@ -79,7 +79,14 @@ export async function aiComplete<T>(params: AICompleteParams<T>): Promise<T> {
         throw new Error("No content in OpenRouter response");
       }
 
-      const parsed = JSON.parse(content);
+      let cleanContent = content.trim();
+      if (cleanContent.startsWith("```json")) {
+        cleanContent = cleanContent.replace(/^```json\n?/, "").replace(/\n?```$/, "");
+      } else if (cleanContent.startsWith("```")) {
+        cleanContent = cleanContent.replace(/^```\n?/, "").replace(/\n?```$/, "");
+      }
+
+      const parsed = JSON.parse(cleanContent);
       return responseSchema.parse(parsed);
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
