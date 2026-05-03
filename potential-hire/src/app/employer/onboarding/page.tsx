@@ -30,6 +30,7 @@ import {
   Zap,
   TrendingUp,
   Shield,
+  Sparkles,
 } from "lucide-react";
 
 // ---- Step schemas ----
