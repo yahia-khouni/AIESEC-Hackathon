@@ -1,4 +1,4 @@
-import { z } from "zod";
+﻿import { z } from "zod";
 
 // ---- Auth Schemas ----
 
@@ -12,9 +12,7 @@ export const registerSchema = z.object({
     .string()
     .min(8, "Password must be at least 8 characters")
     .max(72, "Password must be under 72 characters"),
-  role: z.enum(["candidate", "employer", "institution"], {
-    message: "Please select a role",
-  }),
+  role: z.enum(["candidate", "employer", "institution"], {`n    message: "Please select a role",`n  }),
 });
 
 export type RegisterInput = z.infer<typeof registerSchema>;
@@ -200,3 +198,4 @@ export const quizQuestionSchema = z.object({
 });
 
 export type QuizQuestion = z.infer<typeof quizQuestionSchema>["questions"][number];
+
