@@ -19,26 +19,37 @@ DECLARE
     ep1 UUID := gen_random_uuid();
 BEGIN
     -- ==========================================
-    -- 1. AUTH USERS (Fixed Emails)
+    -- 1. CLEANUP (Delete existing test users to recreate cleanly)
+    -- ==========================================
+    DELETE FROM auth.users WHERE email IN ('candidate1@test.com', 'candidate2@test.com', 'employer1@test.com');
+
+    -- ==========================================
+    -- 2. AUTH USERS & IDENTITIES
     -- ==========================================
     -- Password is: password123
     
-    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'candidate1@test.com') THEN
-        INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
-        VALUES (c1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'candidate1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 1","role":"candidate"}', NOW(), NOW());
-    END IF;
+    -- Candidate 1
+    INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+    VALUES (c1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'candidate1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 1","role":"candidate"}', NOW(), NOW());
+    
+    INSERT INTO auth.identities (id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at)
+    VALUES (gen_random_uuid(), c1, format('{"sub":"%s","email":"%s"}', c1::text, 'candidate1@test.com')::jsonb, 'email', c1::text, NOW(), NOW(), NOW());
 
-    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'candidate2@test.com') THEN
-        INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
-        VALUES (c2, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'candidate2@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 2","role":"candidate"}', NOW(), NOW());
-    END IF;
+    -- Candidate 2
+    INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+    VALUES (c2, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'candidate2@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 2","role":"candidate"}', NOW(), NOW());
 
-    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'employer1@test.com') THEN
-        INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
-        VALUES (e1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'employer1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Employer","role":"employer"}', NOW(), NOW());
-    END IF;
+    INSERT INTO auth.identities (id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at)
+    VALUES (gen_random_uuid(), c2, format('{"sub":"%s","email":"%s"}', c2::text, 'candidate2@test.com')::jsonb, 'email', c2::text, NOW(), NOW(), NOW());
 
-    -- Fetch the exact IDs just in case they already existed (to prevent duplication errors below)
+    -- Employer 1
+    INSERT INTO auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at)
+    VALUES (e1, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'employer1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Employer","role":"employer"}', NOW(), NOW());
+
+    INSERT INTO auth.identities (id, user_id, identity_data, provider, provider_id, last_sign_in_at, created_at, updated_at)
+    VALUES (gen_random_uuid(), e1, format('{"sub":"%s","email":"%s"}', e1::text, 'employer1@test.com')::jsonb, 'email', e1::text, NOW(), NOW(), NOW());
+
+    -- Fetch the exact IDs for the public user updates
     SELECT id INTO c1 FROM auth.users WHERE email = 'candidate1@test.com';
     SELECT id INTO c2 FROM auth.users WHERE email = 'candidate2@test.com';
     SELECT id INTO e1 FROM auth.users WHERE email = 'employer1@test.com';
