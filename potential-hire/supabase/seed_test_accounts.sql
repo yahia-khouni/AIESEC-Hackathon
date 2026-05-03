@@ -22,12 +22,21 @@ BEGIN
     -- 1. AUTH USERS (Fixed Emails)
     -- ==========================================
     -- Password is: password123
-    INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role, instance_id)
-    VALUES 
-    (c1, 'candidate1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 1","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
-    (c2, 'candidate2@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 2","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
-    (e1, 'employer1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Employer","role":"employer"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000')
-    ON CONFLICT (email) DO NOTHING;
+    
+    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'candidate1@test.com') THEN
+        INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role, instance_id)
+        VALUES (c1, 'candidate1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 1","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000');
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'candidate2@test.com') THEN
+        INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role, instance_id)
+        VALUES (c2, 'candidate2@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Candidate 2","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000');
+    END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM auth.users WHERE email = 'employer1@test.com') THEN
+        INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role, instance_id)
+        VALUES (e1, 'employer1@test.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Test Employer","role":"employer"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000');
+    END IF;
 
     -- Fetch the exact IDs just in case they already existed (to prevent duplication errors below)
     SELECT id INTO c1 FROM auth.users WHERE email = 'candidate1@test.com';
