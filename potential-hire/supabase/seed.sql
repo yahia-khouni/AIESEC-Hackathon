@@ -25,16 +25,21 @@ DECLARE
     
     job_1_id UUID := gen_random_uuid();
     internship_1_id UUID := gen_random_uuid();
+    run_id TEXT := floor(extract(epoch from now()))::TEXT;
+    email_cand1 TEXT := 'alex.' || run_id || '@example.com';
+    email_cand2 TEXT := 'sarah.' || run_id || '@example.com';
+    email_emp1 TEXT := 'hiring.' || run_id || '@techcorp.com';
+    email_inst1 TEXT := 'admin.' || run_id || '@bootcamp.edu';
 BEGIN
     -- ==========================================
     -- 1. AUTH USERS (auth.users)
     -- ==========================================
     INSERT INTO auth.users (id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role, instance_id)
     VALUES 
-    (candidate_1_id, 'alex.candidate@example.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Alex Developer","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
-    (candidate_2_id, 'sarah.designer@example.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Sarah UI/UX","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
-    (employer_1_id, 'hiring@techcorp.com', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"TechCorp HR","role":"employer"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
-    (institution_1_id, 'admin@bootcamp.edu', crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Bootcamp Admin","role":"institution"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000');
+    (candidate_1_id, email_cand1, crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Alex Developer","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
+    (candidate_2_id, email_cand2, crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Sarah UI/UX","role":"candidate"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
+    (employer_1_id, email_emp1, crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"TechCorp HR","role":"employer"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000'),
+    (institution_1_id, email_inst1, crypt('password123', gen_salt('bf')), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Bootcamp Admin","role":"institution"}', NOW(), NOW(), 'authenticated', '00000000-0000-0000-0000-000000000000');
 
     -- ==========================================
     -- 2. PUBLIC USERS (UPDATE, since Auth trigger inserts them)
@@ -61,13 +66,21 @@ BEGIN
     -- ==========================================
     -- 4. SKILLS
     -- ==========================================
-    INSERT INTO public.skills (id, name, category, demand_score) VALUES
-    (skill_react, 'React.js', 'technical', 95.0),
-    (skill_node, 'Node.js', 'technical', 90.0),
-    (skill_python, 'Python', 'technical', 88.0),
-    (skill_figma, 'Figma', 'technical', 92.0),
-    (skill_sql, 'PostgreSQL', 'technical', 85.0),
-    (skill_communication, 'Communication', 'soft', 98.0);
+    INSERT INTO public.skills (name, category, demand_score) VALUES
+    ('React.js', 'technical', 95.0),
+    ('Node.js', 'technical', 90.0),
+    ('Python', 'technical', 88.0),
+    ('Figma', 'technical', 92.0),
+    ('PostgreSQL', 'technical', 85.0),
+    ('Communication', 'soft', 98.0)
+    ON CONFLICT (name) DO UPDATE SET demand_score = EXCLUDED.demand_score;
+
+    SELECT id INTO skill_react FROM public.skills WHERE name = 'React.js';
+    SELECT id INTO skill_node FROM public.skills WHERE name = 'Node.js';
+    SELECT id INTO skill_python FROM public.skills WHERE name = 'Python';
+    SELECT id INTO skill_figma FROM public.skills WHERE name = 'Figma';
+    SELECT id INTO skill_sql FROM public.skills WHERE name = 'PostgreSQL';
+    SELECT id INTO skill_communication FROM public.skills WHERE name = 'Communication';
 
     -- ==========================================
     -- 5. CANDIDATE SKILLS
